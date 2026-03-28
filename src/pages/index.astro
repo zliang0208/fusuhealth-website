@@ -1,0 +1,73 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="首页">
+  <!-- Hero Section -->
+  <section style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 80px 0;">
+    <div class="container" style="text-align: center;">
+      <h1 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 16px;">
+        AI 驱动的麻醉学知识服务
+      </h1>
+      <p style="font-size: 1.2rem; opacity: 0.9; max-width: 600px; margin: 0 auto 32px;">
+        专注麻醉学领域，用人工智能让医学知识更可及、科研更高效
+      </p>
+      <a href="/services" style="display: inline-block; background: white; color: #764ba2; padding: 12px 32px; border-radius: 8px; font-weight: 600; font-size: 1rem;">
+        了解我们的服务 →
+      </a>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section style="padding: 60px 0;">
+    <div class="container">
+      <h2 style="text-align: center; font-size: 1.8rem; margin-bottom: 48px;">核心服务</h2>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 32px;">
+
+        <div style="padding: 32px; border: 1px solid var(--border); border-radius: 12px;">
+          <div style="font-size: 2rem; margin-bottom: 12px;">📚</div>
+          <h3 style="font-size: 1.1rem; margin-bottom: 8px;">麻醉学文献解读</h3>
+          <p style="color: var(--text-secondary); font-size: 0.95rem;">
+            每周精选全球顶级期刊最新麻醉学研究，用通俗易懂的方式深度解读，帮助临床医生快速把握学科前沿。
+          </p>
+        </div>
+
+        <div style="padding: 32px; border: 1px solid var(--border); border-radius: 12px;">
+          <div style="font-size: 2rem; margin-bottom: 12px;">🔍</div>
+          <h3 style="font-size: 1.1rem; margin-bottom: 8px;">AI 智能文献检索</h3>
+          <p style="color: var(--text-secondary); font-size: 0.95rem;">
+            基于 Google Gemini AI 引擎，提供精准的麻醉学文献检索、摘要生成和关键发现提取服务。
+          </p>
+        </div>
+
+        <div style="padding: 32px; border: 1px solid var(--border); border-radius: 12px;">
+          <div style="font-size: 2rem; margin-bottom: 12px;">🎨</div>
+          <h3 style="font-size: 1.1rem; margin-bottom: 8px;">AI 医学图像生成</h3>
+          <p style="color: var(--text-secondary); font-size: 0.95rem;">
+            AI 驱动的医学插图、数据可视化图表、科研论文配图生成，让学术表达更加专业精美。
+          </p>
+        </div>
+
+        <div style="padding: 32px; border: 1px solid var(--border); border-radius: 12px;">
+          <div style="font-size: 2rem; margin-bottom: 12px;">📝</div>
+          <h3 style="font-size: 1.1rem; margin-bottom: 8px;">课题撰写辅助</h3>
+          <p style="color: var(--text-secondary); font-size: 0.95rem;">
+            AI 辅助的科研课题申报书撰写服务，从选题分析到全文生成，全流程智能化支持。
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section style="background: var(--bg-light); padding: 60px 0;">
+    <div class="container" style="text-align: center;">
+      <h2 style="font-size: 1.5rem; margin-bottom: 16px;">想了解更多？</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 24px;">欢迎通过邮件与我们联系，获取服务详情</p>
+      <a href="/contact" style="display: inline-block; background: var(--primary); color: white; padding: 12px 32px; border-radius: 8px; font-weight: 600;">
+        联系我们
+      </a>
+    </div>
+  </section>
+</Layout>
