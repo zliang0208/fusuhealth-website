@@ -2,45 +2,330 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="关于我们">
-  <section style="padding: 60px 0;">
-    <div class="container" style="max-width: 800px;">
-      <h1 style="font-size: 2rem; margin-bottom: 24px;">关于我们</h1>
+<Layout title="关于我们" description="杭州扶苏健康科技有限公司——专注麻醉学领域的AI知识服务，以技术赋能麻醉科医生的学、教、研、写四大场景。">
 
-      <div style="margin-bottom: 32px;">
-        <h2 style="font-size: 1.3rem; margin-bottom: 12px; color: var(--primary);">公司简介</h2>
-        <p style="color: var(--text-secondary); margin-bottom: 16px;">
-          杭州扶苏健康科技有限公司成立于 2025 年，专注于麻醉学领域的 AI 知识服务。
-          我们致力于运用人工智能技术，让医学知识传播更高效，让科研工作更便捷。
-        </p>
-      </div>
+<style>
+  .page-hero {
+    background: linear-gradient(160deg, #0f1e35, #1a3560);
+    color: #fff;
+    padding: 64px 0 56px;
+    text-align: center;
+  }
+  .page-hero h1 { font-size: 2.2rem; font-weight: 900; margin-bottom: 12px; }
+  .page-hero p { color: rgba(255,255,255,.7); font-size: 1rem; max-width: 520px; margin: 0 auto; }
 
-      <div style="margin-bottom: 32px;">
-        <h2 style="font-size: 1.3rem; margin-bottom: 12px; color: var(--primary);">我们的使命</h2>
-        <p style="color: var(--text-secondary); margin-bottom: 16px;">
-          通过 AI 技术赋能麻醉学知识的生产与传播，降低优质医学内容获取门槛，
-          帮助麻醉科医生更好地获取前沿研究成果，提升临床实践水平。
-        </p>
-      </div>
+  .about-section { padding: 72px 0; }
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1.1fr 1fr;
+    gap: 60px;
+    align-items: start;
+    margin-bottom: 64px;
+  }
+  .about-grid h2 { font-size: 1.6rem; font-weight: 800; margin-bottom: 16px; }
+  .about-grid p { color: var(--muted); font-size: .93rem; line-height: 1.85; margin-bottom: 14px; }
 
-      <div style="margin-bottom: 32px;">
-        <h2 style="font-size: 1.3rem; margin-bottom: 12px; color: var(--primary);">核心能力</h2>
-        <ul style="color: var(--text-secondary); padding-left: 20px;">
-          <li style="margin-bottom: 8px;">深耕麻醉学领域的专业内容生产</li>
-          <li style="margin-bottom: 8px;">Google Gemini AI 技术的深度应用</li>
-          <li style="margin-bottom: 8px;">从文献检索到课题撰写的全链条 AI 服务</li>
-          <li style="margin-bottom: 8px;">微信公众号 + 视频号内容矩阵运营</li>
-        </ul>
-      </div>
+  .mission-box {
+    background: var(--bg-blue);
+    border-left: 4px solid var(--primary);
+    border-radius: 0 10px 10px 0;
+    padding: 20px 24px;
+    margin-top: 24px;
+  }
+  .mission-box p { color: var(--text); font-weight: 600; font-size: .95rem; margin: 0; line-height: 1.7; }
 
+  .info-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: var(--shadow);
+  }
+  .info-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: .875rem;
+  }
+  .info-row:last-child { border-bottom: none; }
+  .info-label { color: var(--muted); flex-shrink: 0; width: 80px; }
+  .info-val { color: var(--text); font-weight: 500; line-height: 1.6; }
+
+  /* Why section */
+  .why-section { background: var(--bg-soft); padding: 72px 0; }
+  .why-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 44px;
+  }
+  .why-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 28px 24px;
+    box-shadow: var(--shadow);
+  }
+  .why-icon { font-size: 2rem; margin-bottom: 14px; }
+  .why-title { font-size: 1rem; font-weight: 700; margin-bottom: 8px; }
+  .why-desc { color: var(--muted); font-size: .875rem; line-height: 1.75; }
+
+  /* Roadmap */
+  .roadmap-section { padding: 72px 0; }
+  .roadmap { position: relative; max-width: 700px; margin: 44px auto 0; }
+  .roadmap::before {
+    content: '';
+    position: absolute;
+    left: 18px;
+    top: 0; bottom: 0;
+    width: 2px;
+    background: var(--border);
+  }
+  .rm-item {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 32px;
+    position: relative;
+  }
+  .rm-dot {
+    width: 38px; height: 38px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .8rem; font-weight: 800;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  .rm-dot.done { background: #22c55e; color: #fff; }
+  .rm-dot.now  { background: var(--primary); color: #fff; }
+  .rm-dot.next { background: var(--border); color: var(--muted); }
+  .rm-content { padding-top: 8px; }
+  .rm-time { font-size: .78rem; color: var(--muted); font-weight: 600; margin-bottom: 4px; text-transform: uppercase; letter-spacing: .06em; }
+  .rm-title { font-size: .95rem; font-weight: 700; margin-bottom: 4px; }
+  .rm-desc { font-size: .85rem; color: var(--muted); line-height: 1.6; }
+
+  /* Tech stack */
+  .tech-section { background: var(--navy); color: #fff; padding: 60px 0; }
+  .tech-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    margin-top: 40px;
+  }
+  .tech-item {
+    background: rgba(255,255,255,.05);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+  }
+  .tech-item .t-icon { font-size: 1.8rem; margin-bottom: 10px; }
+  .tech-item .t-name { font-size: .88rem; font-weight: 700; color: #e2e8f0; margin-bottom: 4px; }
+  .tech-item .t-role { font-size: .78rem; color: rgba(255,255,255,.45); }
+
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; gap: 32px; }
+    .why-grid   { grid-template-columns: 1fr 1fr; }
+    .tech-grid  { grid-template-columns: 1fr 1fr; }
+    .page-hero h1 { font-size: 1.7rem; }
+  }
+  @media (max-width: 600px) {
+    .why-grid { grid-template-columns: 1fr; }
+    .tech-grid { grid-template-columns: 1fr 1fr; }
+  }
+</style>
+
+<section class="page-hero">
+  <div class="container">
+    <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(6,182,212,.15);border:1px solid rgba(6,182,212,.3);color:#67e8f9;font-size:.78rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:16px;letter-spacing:.05em;">
+      关于我们
+    </div>
+    <h1>做麻醉学领域的<br/>AI 知识基础设施</h1>
+    <p>以人工智能技术为核心，赋能麻醉科医生的学习、教学、科研与写作。</p>
+  </div>
+</section>
+
+<!-- About main -->
+<section class="about-section">
+  <div class="container">
+    <div class="about-grid">
       <div>
-        <h2 style="font-size: 1.3rem; margin-bottom: 12px; color: var(--primary);">品牌矩阵</h2>
-        <p style="color: var(--text-secondary);">
-          微信公众号：麻醉学文献解读（文字内容）<br />
-          视频号：麻醉学文献解读（视频内容）<br />
-          官方网站：fusuhealth.cn
+        <div class="section-label">公司简介</div>
+        <h2>我们是谁</h2>
+        <p>
+          杭州扶苏健康科技有限公司成立于 2025 年，由有麻醉学临床背景的团队创立，
+          专注于麻醉学领域的 AI 知识服务。我们深知麻醉科医生在文献阅读、科研写作上
+          所耗费的大量时间，因此以 AI 技术为工具，针对性地解决这些真实痛点。
         </p>
+        <p>
+          公司名称取自经典，寓意「守护生命、关怀健康」。我们的起点是一个微信公众号，
+          现已发展为拥有文献检索、医学生图、课题撰写、内容生产四条产品线的 AI 知识服务公司。
+        </p>
+        <div class="mission-box">
+          <p>
+            「通过 AI 技术赋能麻醉学知识的生产与传播，让每一位麻醉科医生都能以最低门槛，
+            获取最高质量的科研与临床知识支持。」
+          </p>
+        </div>
+      </div>
+      <div>
+        <div class="info-card">
+          <div style="font-size:.82rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:4px;">公司信息</div>
+          <div class="info-row"><span class="info-label">公司名称</span><span class="info-val">杭州扶苏健康科技有限公司</span></div>
+          <div class="info-row"><span class="info-label">成立时间</span><span class="info-val">2025 年</span></div>
+          <div class="info-row"><span class="info-label">公司定位</span><span class="info-val">麻醉学领域 AI 知识服务</span></div>
+          <div class="info-row"><span class="info-label">核心团队</span><span class="info-val">麻醉学临床背景 + AI 技术</span></div>
+          <div class="info-row"><span class="info-label">公众号</span><span class="info-val">麻醉学文献解读</span></div>
+          <div class="info-row"><span class="info-label">官网</span><span class="info-val">fusuhealth.cn</span></div>
+          <div class="info-row"><span class="info-label">联系邮箱</span><span class="info-val">admin@fusuhealth.net</span></div>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
+<!-- Why us -->
+<section class="why-section">
+  <div class="container">
+    <div class="section-label">核心优势</div>
+    <h2 class="section-title">为什么选择扶苏</h2>
+    <p class="section-sub">我们不是通用 AI 工具，而是为麻醉学场景深度定制的知识服务。</p>
+    <div class="why-grid">
+      <div class="why-card">
+        <div class="why-icon">🩺</div>
+        <div class="why-title">麻醉学垂直专注</div>
+        <div class="why-desc">100% 聚焦麻醉学领域，检索词、知识库、解读逻辑均经过麻醉学专业校准，不是泛医学工具。</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">⚡</div>
+        <div class="why-title">临床需求驱动</div>
+        <div class="why-desc">功能设计来自真实的临床备课、科研写作场景，而非想象中的需求。解决的是你每天真正遇到的问题。</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🔗</div>
+        <div class="why-title">全链条服务</div>
+        <div class="why-desc">从免费文献解读推文到付费检索工具，再到高端课题定制，覆盖麻醉科医生不同阶段、不同预算的需求。</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🤖</div>
+        <div class="why-title">顶尖 AI 引擎</div>
+        <div class="why-desc">基于 Google Gemini 最新模型，结合 PubMed 权威数据源，输出质量远超通用 ChatGPT 对话。</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">📱</div>
+        <div class="why-title">微信生态原生</div>
+        <div class="why-desc">小程序 + 公众号的微信生态部署，无需下载额外 App，符合国内医生的日常使用习惯。</div>
+      </div>
+      <div class="why-card">
+        <div class="why-icon">🛡️</div>
+        <div class="why-title">数据安全可靠</div>
+        <div class="why-desc">服务器部署于腾讯云国内节点，符合国内数据合规要求，用户数据不出境，安全放心。</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Roadmap -->
+<section class="roadmap-section">
+  <div class="container" style="text-align:center;">
+    <div class="section-label">发展历程</div>
+    <h2 class="section-title">我们走到哪里了</h2>
+    <div class="roadmap">
+      <div class="rm-item">
+        <div class="rm-dot done">✓</div>
+        <div class="rm-content">
+          <div class="rm-time">2025 · 起步</div>
+          <div class="rm-title">公司成立 · 公众号上线</div>
+          <div class="rm-desc">完成公司注册，微信公众号「麻醉学文献解读」上线运营，开始积累内容和读者。</div>
+        </div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot done">✓</div>
+        <div class="rm-content">
+          <div class="rm-time">2026 Q1 · 技术奠基</div>
+          <div class="rm-title">服务器部署 · AI 引擎接入</div>
+          <div class="rm-desc">腾讯云服务器和 GCP AI 服务器搭建完成，PubMed 检索 API 和 Google Gemini 引擎集成。</div>
+        </div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot now">→</div>
+        <div class="rm-content">
+          <div class="rm-time">2026 Q2 · 当前阶段</div>
+          <div class="rm-title">AI 文献检索小程序开发中</div>
+          <div class="rm-desc">微信小程序前端开发，用户体系、会员系统搭建，测试与内测，计划本季度发布。</div>
+        </div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot next">3</div>
+        <div class="rm-content">
+          <div class="rm-time">2026 Q3 · 扩展</div>
+          <div class="rm-title">AI 医学生图上线 · 课题服务启动</div>
+          <div class="rm-desc">医学插图生成功能上线，课题撰写服务正式对外接受委托，会员体系完善。</div>
+        </div>
+      </div>
+      <div class="rm-item">
+        <div class="rm-dot next">4</div>
+        <div class="rm-content">
+          <div class="rm-time">2026 Q4 · 沉淀</div>
+          <div class="rm-title">麻醉学知识库 · AI 问答</div>
+          <div class="rm-desc">构建麻醉学专属 RAG 知识库，支持基于文献库的深度问答，持续深化专业壁垒。</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Tech stack -->
+<section class="tech-section">
+  <div class="container" style="text-align:center;">
+    <div style="font-size:.8rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:#67e8f9;margin-bottom:10px;">技术底座</div>
+    <h2 style="font-size:1.6rem;font-weight:800;color:#fff;margin-bottom:8px;">我们的技术栈</h2>
+    <p style="color:rgba(255,255,255,.55);font-size:.9rem;max-width:480px;margin:0 auto;">企业级基础设施，保障服务的稳定性、速度与安全性。</p>
+    <div class="tech-grid">
+      <div class="tech-item">
+        <div class="t-icon">🤖</div>
+        <div class="t-name">Google Gemini</div>
+        <div class="t-role">AI 摘要与解读引擎</div>
+      </div>
+      <div class="tech-item">
+        <div class="t-icon">🔬</div>
+        <div class="t-name">PubMed / NCBI</div>
+        <div class="t-role">权威医学文献数据库</div>
+      </div>
+      <div class="tech-item">
+        <div class="t-icon">☁️</div>
+        <div class="t-name">腾讯云</div>
+        <div class="t-role">国内主服务器（上海）</div>
+      </div>
+      <div class="tech-item">
+        <div class="t-icon">🌐</div>
+        <div class="t-name">Google Cloud</div>
+        <div class="t-role">AI 计算服务器（美国）</div>
+      </div>
+      <div class="tech-item">
+        <div class="t-icon">⚡</div>
+        <div class="t-name">FastAPI</div>
+        <div class="t-role">高性能后端 API 框架</div>
+      </div>
+      <div class="tech-item">
+        <div class="t-icon">📱</div>
+        <div class="t-name">微信小程序</div>
+        <div class="t-role">移动端前端入口</div>
+      </div>
+      <div class="tech-item">
+        <div class="t-icon">🔒</div>
+        <div class="t-name">JWT + HTTPS</div>
+        <div class="t-role">用户认证与传输加密</div>
+      </div>
+      <div class="tech-item">
+        <div class="t-icon">🗄️</div>
+        <div class="t-name">SQLite → PostgreSQL</div>
+        <div class="t-role">用户数据持久化</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 </Layout>

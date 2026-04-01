@@ -2,32 +2,228 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="联系我们">
-  <section style="padding: 60px 0;">
-    <div class="container" style="max-width: 700px;">
-      <h1 style="font-size: 2rem; margin-bottom: 24px;">联系我们</h1>
+<Layout title="联系我们" description="联系杭州扶苏健康科技——商务合作、服务咨询、课题撰写委托，欢迎邮件或微信公众号联系。">
 
-      <div style="border: 1px solid var(--border); border-radius: 12px; padding: 32px; margin-bottom: 24px;">
-        <h2 style="font-size: 1.2rem; margin-bottom: 16px;">📧 邮件联系</h2>
-        <p style="color: var(--text-secondary);">
-          商务合作 / 服务咨询：<a href="mailto:admin@fusuhealth.net">admin@fusuhealth.net</a>
-        </p>
+<style>
+  .page-hero {
+    background: linear-gradient(160deg, #0f1e35, #1a3560);
+    color: #fff;
+    padding: 64px 0 56px;
+    text-align: center;
+  }
+  .page-hero h1 { font-size: 2.2rem; font-weight: 900; margin-bottom: 12px; }
+  .page-hero p { color: rgba(255,255,255,.7); font-size: 1rem; max-width: 480px; margin: 0 auto; }
+
+  .contact-section { padding: 72px 0; }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .contact-card {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 32px;
+    box-shadow: var(--shadow);
+    transition: box-shadow .2s;
+  }
+  .contact-card:hover { box-shadow: 0 6px 28px rgba(0,0,0,.1); }
+
+  .cc-icon {
+    width: 48px; height: 48px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.4rem;
+    margin-bottom: 16px;
+  }
+  .cc-title { font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; }
+  .cc-desc { color: var(--muted); font-size: .875rem; line-height: 1.7; margin-bottom: 16px; }
+  .cc-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: .875rem;
+    font-weight: 600;
+    color: var(--text);
+    transition: all .2s;
+    width: 100%;
+    justify-content: center;
+  }
+  .cc-action:hover { background: var(--bg-blue); border-color: var(--primary); color: var(--primary); }
+  .cc-action.primary-btn { background: var(--primary); border-color: var(--primary); color: #fff; }
+  .cc-action.primary-btn:hover { background: var(--primary-h); }
+
+  /* Scenarios */
+  .scenario-section { background: var(--bg-soft); padding: 72px 0; }
+  .scenario-list { max-width: 720px; margin: 44px auto 0; }
+  .scenario-item {
+    display: flex;
+    gap: 20px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+    align-items: flex-start;
+  }
+  .scenario-item:last-child { border-bottom: none; }
+  .s-num {
+    width: 32px; height: 32px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .8rem; font-weight: 800;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .s-title { font-size: .95rem; font-weight: 700; margin-bottom: 4px; }
+  .s-desc { font-size: .875rem; color: var(--muted); line-height: 1.6; }
+
+  /* Company info */
+  .info-section { padding: 72px 0; }
+  .info-inner {
+    max-width: 600px;
+    margin: 0 auto;
+    background: var(--navy);
+    border-radius: 14px;
+    padding: 40px 48px;
+    color: rgba(255,255,255,.7);
+    text-align: center;
+  }
+  .info-inner h2 { color: #fff; font-size: 1.3rem; font-weight: 800; margin-bottom: 20px; }
+  .info-row-alt {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    font-size: .875rem;
+  }
+  .info-row-alt:last-child { border-bottom: none; }
+  .info-key { color: rgba(255,255,255,.45); }
+  .info-value { color: rgba(255,255,255,.85); font-weight: 500; }
+
+  @media (max-width: 700px) {
+    .contact-grid { grid-template-columns: 1fr; }
+    .info-inner { padding: 28px 24px; }
+    .page-hero h1 { font-size: 1.7rem; }
+  }
+</style>
+
+<section class="page-hero">
+  <div class="container">
+    <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(6,182,212,.15);border:1px solid rgba(6,182,212,.3);color:#67e8f9;font-size:.78rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:16px;letter-spacing:.05em;">
+      联系我们
+    </div>
+    <h1>与我们取得联系</h1>
+    <p>无论是服务咨询、商务合作还是课题委托，欢迎随时联系。</p>
+  </div>
+</section>
+
+<!-- Contact methods -->
+<section class="contact-section">
+  <div class="container">
+    <div class="contact-grid">
+
+      <div class="contact-card">
+        <div class="cc-icon" style="background:#dbeafe;">📧</div>
+        <div class="cc-title">邮件联系</div>
+        <div class="cc-desc">
+          所有商务合作、服务咨询、课题撰写委托，均可通过邮件联系。
+          我们承诺 24 小时内回复。
+        </div>
+        <a href="mailto:admin@fusuhealth.net" class="cc-action primary-btn">
+          📧 admin@fusuhealth.net
+        </a>
       </div>
 
-      <div style="border: 1px solid var(--border); border-radius: 12px; padding: 32px; margin-bottom: 24px;">
-        <h2 style="font-size: 1.2rem; margin-bottom: 16px;">📱 微信公众号</h2>
-        <p style="color: var(--text-secondary);">
-          搜索关注「<strong>麻醉学文献解读</strong>」，获取最新文献解读和服务动态。
-        </p>
+      <div class="contact-card">
+        <div class="cc-icon" style="background:#dcfce7;">💬</div>
+        <div class="cc-title">微信公众号</div>
+        <div class="cc-desc">
+          关注微信公众号「麻醉学文献解读」，可通过公众号消息功能与我们取得联系，
+          同时获取每周顶刊文献解读。
+        </div>
+        <div class="cc-action" style="background:var(--bg-soft);font-weight:700;letter-spacing:.02em;">
+          💬 搜索「麻醉学文献解读」关注
+        </div>
       </div>
 
-      <div style="border: 1px solid var(--border); border-radius: 12px; padding: 32px;">
-        <h2 style="font-size: 1.2rem; margin-bottom: 16px;">🏢 公司信息</h2>
-        <p style="color: var(--text-secondary);">
-          公司名称：杭州扶苏健康科技有限公司<br />
-          官方网站：fusuhealth.cn
-        </p>
+    </div>
+  </div>
+</section>
+
+<!-- When to contact -->
+<section class="scenario-section">
+  <div class="container" style="text-align:center;">
+    <div class="section-label">联系场景</div>
+    <h2 class="section-title">哪些情况可以找我们</h2>
+    <div class="scenario-list" style="text-align:left;">
+      <div class="scenario-item">
+        <div class="s-num">1</div>
+        <div>
+          <div class="s-title">AI 文献检索小程序内测资格</div>
+          <div class="s-desc">小程序开发中，联系我们申请加入内测，第一批体验 AI 文献检索功能，并提供反馈意见。</div>
+        </div>
+      </div>
+      <div class="scenario-item">
+        <div class="s-num">2</div>
+        <div>
+          <div class="s-title">课题撰写服务咨询</div>
+          <div class="s-desc">正在准备国自然、省市级基金申报？联系我们了解 AI 辅助课题撰写服务的具体流程和报价。</div>
+        </div>
+      </div>
+      <div class="scenario-item">
+        <div class="s-num">3</div>
+        <div>
+          <div class="s-title">商务合作与内容合作</div>
+          <div class="s-desc">学术会议、培训机构、医疗器械或药械企业的内容合作、推广合作，欢迎发送合作方案至邮箱。</div>
+        </div>
+      </div>
+      <div class="scenario-item">
+        <div class="s-num">4</div>
+        <div>
+          <div class="s-title">产品反馈与功能建议</div>
+          <div class="s-desc">使用过程中遇到问题，或对我们的产品有功能建议，欢迎告知，你的反馈是我们迭代的最重要依据。</div>
+        </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
+
+<!-- Company info -->
+<section class="info-section">
+  <div class="container">
+    <div class="info-inner">
+      <h2>公司基本信息</h2>
+      <div class="info-row-alt">
+        <span class="info-key">公司名称</span>
+        <span class="info-value">杭州扶苏健康科技有限公司</span>
+      </div>
+      <div class="info-row-alt">
+        <span class="info-key">官方网站</span>
+        <span class="info-value">fusuhealth.cn</span>
+      </div>
+      <div class="info-row-alt">
+        <span class="info-key">联系邮箱</span>
+        <span class="info-value">admin@fusuhealth.net</span>
+      </div>
+      <div class="info-row-alt">
+        <span class="info-key">微信公众号</span>
+        <span class="info-value">麻醉学文献解读</span>
+      </div>
+      <div class="info-row-alt">
+        <span class="info-key">邮件回复</span>
+        <span class="info-value">工作日 24 小时内</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 </Layout>

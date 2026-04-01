@@ -2,70 +2,351 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="服务">
-  <section style="padding: 60px 0;">
-    <div class="container">
-      <h1 style="font-size: 2rem; margin-bottom: 16px;">我们的服务</h1>
-      <p style="color: var(--text-secondary); margin-bottom: 48px; max-width: 700px;">
-        围绕麻醉学领域，我们提供从知识获取到科研辅助的全方位 AI 服务。
-      </p>
+<Layout title="服务" description="扶苏健康科技服务详情：AI智能文献检索、麻醉学文献解读、AI医学生图、AI课题撰写——覆盖麻醉科医生学教研写全场景。">
 
-      <!-- 服务1 -->
-      <div style="border: 1px solid var(--border); border-radius: 12px; padding: 32px; margin-bottom: 24px;">
-        <h2 style="font-size: 1.3rem; margin-bottom: 12px;">📚 麻醉学文献解读</h2>
-        <p style="color: var(--text-secondary); margin-bottom: 16px;">
-          每周精选 NEJM、Lancet、Anesthesiology、BJA 等顶级期刊的最新麻醉学研究，
-          通过微信公众号和视频号进行深度解读，让您在碎片化时间内掌握学科前沿。
-        </p>
-        <div style="background: var(--bg-light); padding: 16px; border-radius: 8px;">
-          <strong>内容形式：</strong>微信图文 + 短视频<br />
-          <strong>更新频率：</strong>每周 2-3 篇<br />
-          <strong>获取方式：</strong>关注微信公众号「麻醉学文献解读」
-        </div>
-      </div>
+<style>
+  .page-hero {
+    background: linear-gradient(160deg, #0f1e35, #1a3560);
+    color: #fff;
+    padding: 64px 0 56px;
+    text-align: center;
+  }
+  .page-hero h1 { font-size: 2.2rem; font-weight: 900; margin-bottom: 12px; }
+  .page-hero p { color: rgba(255,255,255,.7); font-size: 1rem; max-width: 520px; margin: 0 auto; }
 
-      <!-- 服务2 -->
-      <div style="border: 1px solid var(--border); border-radius: 12px; padding: 32px; margin-bottom: 24px;">
-        <h2 style="font-size: 1.3rem; margin-bottom: 12px;">🔍 AI 智能文献检索</h2>
-        <p style="color: var(--text-secondary); margin-bottom: 16px;">
-          基于 Google Gemini AI 引擎，提供三种文献检索模式：关键词精确搜索、
-          问题驱动搜索、研究方向探索。支持自动摘要、关键发现提取和参考文献整理。
-        </p>
-        <div style="background: var(--bg-light); padding: 16px; border-radius: 8px;">
-          <strong>技术引擎：</strong>Google Gemini AI<br />
-          <strong>服务状态：</strong>即将上线<br />
-          <strong>适用场景：</strong>临床查证、科研选题、文献综述
-        </div>
-      </div>
+  .services-section { padding: 72px 0; }
 
-      <!-- 服务3 -->
-      <div style="border: 1px solid var(--border); border-radius: 12px; padding: 32px; margin-bottom: 24px;">
-        <h2 style="font-size: 1.3rem; margin-bottom: 12px;">🎨 AI 医学图像生成</h2>
-        <p style="color: var(--text-secondary); margin-bottom: 16px;">
-          AI 驱动的专业医学插图、统计图表、科研论文配图和公众号封面图生成服务。
-          让您的学术内容呈现更加专业和美观。
-        </p>
-        <div style="background: var(--bg-light); padding: 16px; border-radius: 8px;">
-          <strong>图像类型：</strong>医学插图 / 数据图表 / 论文配图 / 封面设计<br />
-          <strong>服务状态：</strong>即将上线<br />
-          <strong>适用场景：</strong>论文发表、学术演讲、公众号运营
-        </div>
-      </div>
+  .service-block {
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 36px;
+    background: #fff;
+    box-shadow: var(--shadow);
+  }
+  .service-block.active { border-color: #22c55e; }
+  .service-block.dev    { border-color: var(--primary); }
 
-      <!-- 服务4 -->
-      <div style="border: 1px solid var(--border); border-radius: 12px; padding: 32px; margin-bottom: 24px;">
-        <h2 style="font-size: 1.3rem; margin-bottom: 12px;">📝 课题撰写辅助（高端定制）</h2>
-        <p style="color: var(--text-secondary); margin-bottom: 16px;">
-          AI 辅助的科研课题申报书撰写服务，覆盖从选题分析、文献综述、研究设计到全文撰写的完整流程。
-          采用多 AI 引擎协同工作，确保输出质量。
-        </p>
-        <div style="background: var(--bg-light); padding: 16px; border-radius: 8px;">
-          <strong>服务模式：</strong>一对一高端定制<br />
-          <strong>服务状态：</strong>即将上线<br />
-          <strong>适用场景：</strong>国自然 / 省市级基金课题申报
-        </div>
-      </div>
+  .service-head {
+    padding: 28px 32px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  .service-head-left { display: flex; align-items: flex-start; gap: 18px; }
+  .svc-icon {
+    width: 52px; height: 52px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+  .svc-name { font-size: 1.25rem; font-weight: 800; margin-bottom: 6px; }
+  .svc-tagline { color: var(--muted); font-size: .9rem; }
 
+  .service-body {
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 32px;
+    align-items: start;
+  }
+  .service-desc { color: var(--muted); font-size: .9rem; line-height: 1.8; margin-bottom: 20px; }
+  .feature-list { list-style: none; }
+  .feature-list li {
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: .875rem;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .feature-list li:last-child { border-bottom: none; }
+  .feat-check { color: #16a34a; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+  .service-meta {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px;
+  }
+  .meta-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: .875rem; }
+  .meta-row:last-child { border-bottom: none; }
+  .meta-key { color: var(--muted); }
+  .meta-val { font-weight: 600; color: var(--text); text-align: right; }
+
+  .flow-section {
+    background: var(--bg-blue);
+    padding: 20px 24px;
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+  .flow-title { font-size: .82rem; font-weight: 700; color: var(--primary); margin-bottom: 12px; text-transform: uppercase; letter-spacing: .06em; }
+  .flow-steps { display: flex; flex-direction: column; gap: 8px; }
+  .flow-step {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: .84rem;
+    color: var(--text);
+  }
+  .step-num {
+    width: 22px; height: 22px;
+    background: var(--primary);
+    color: #fff;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: .7rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  /* Pricing note */
+  .pricing-section {
+    background: var(--navy);
+    color: #fff;
+    border-radius: 14px;
+    padding: 48px;
+    margin-top: 48px;
+    text-align: center;
+  }
+  .pricing-section h2 { font-size: 1.5rem; font-weight: 800; margin-bottom: 12px; }
+  .pricing-section p { color: rgba(255,255,255,.7); font-size: .9rem; max-width: 500px; margin: 0 auto 28px; }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    text-align: left;
+    margin-top: 0;
+  }
+  .price-card {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.12);
+    border-radius: 10px;
+    padding: 20px;
+  }
+  .price-tier { font-size: .78rem; color: #67e8f9; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; margin-bottom: 8px; }
+  .price-num { font-size: 1.5rem; font-weight: 900; color: #fff; margin-bottom: 6px; }
+  .price-desc { font-size: .8rem; color: rgba(255,255,255,.55); line-height: 1.6; }
+
+  @media (max-width: 768px) {
+    .service-body { grid-template-columns: 1fr; }
+    .service-head { flex-direction: column; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .page-hero h1 { font-size: 1.7rem; }
+  }
+</style>
+
+<section class="page-hero">
+  <div class="container">
+    <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(6,182,212,.15);border:1px solid rgba(6,182,212,.3);color:#67e8f9;font-size:.78rem;font-weight:700;padding:4px 14px;border-radius:20px;margin-bottom:16px;letter-spacing:.05em;">
+      4 条产品线 · 覆盖麻醉学全场景
     </div>
-  </section>
+    <h1>我们的服务</h1>
+    <p>围绕麻醉科医生的「学、教、研、写」四个场景，从免费推文到高端定制，一站式满足不同需求。</p>
+  </div>
+</section>
+
+<section class="services-section">
+  <div class="container">
+
+    <!-- Service 1: 文献检索 -->
+    <div class="service-block dev" id="literature">
+      <div class="service-head">
+        <div class="service-head-left">
+          <div class="svc-icon" style="background:#dbeafe;">🔍</div>
+          <div>
+            <div class="svc-name">AI 智能文献检索</div>
+            <div class="svc-tagline">检索、解读、提炼——把文献综述从几小时压缩到几分钟</div>
+          </div>
+        </div>
+        <span class="badge badge-blue">⚙ 开发中 · 即将上线</span>
+      </div>
+      <div class="service-body">
+        <div>
+          <p class="service-desc">
+            基于 PubMed 海量数据库，结合 Google Gemini AI，提供面向麻醉科医生的智能文献检索服务。
+            你只需输入一个临床问题或研究主题，系统自动完成检索策略生成、文献筛选、摘要翻译和要点提取——
+            以微信小程序形态，随时随地可用。
+          </p>
+          <ul class="feature-list">
+            <li><span class="feat-check">✓</span> 自然语言搜索，无需记忆 MeSH 检索式</li>
+            <li><span class="feat-check">✓</span> 按相关性 + 影响因子智能排序</li>
+            <li><span class="feat-check">✓</span> AI 一键生成中文摘要、临床意义、方法学评价</li>
+            <li><span class="feat-check">✓</span> PPT 备课要点自动汇总（多文献综合提炼）</li>
+            <li><span class="feat-check">✓</span> Vancouver / GB/T 格式参考文献列表自动生成</li>
+            <li><span class="feat-check">✓</span> 文献收藏夹，按项目分类管理</li>
+          </ul>
+          <div class="flow-section">
+            <div class="flow-title">典型使用流程</div>
+            <div class="flow-steps">
+              <div class="flow-step"><span class="step-num">1</span>输入主题，如「围术期低血压与心肌损伤」</div>
+              <div class="flow-step"><span class="step-num">2</span>系统返回近5年高影响力相关文献列表</div>
+              <div class="flow-step"><span class="step-num">3</span>点击任意文献，AI 生成中文解读摘要</div>
+              <div class="flow-step"><span class="step-num">4</span>一键导出 PPT 要点 + 参考文献列表</div>
+            </div>
+          </div>
+        </div>
+        <div class="service-meta">
+          <div class="meta-row"><span class="meta-key">服务形态</span><span class="meta-val">微信小程序</span></div>
+          <div class="meta-row"><span class="meta-key">数据来源</span><span class="meta-val">PubMed / NCBI</span></div>
+          <div class="meta-row"><span class="meta-key">AI 引擎</span><span class="meta-val">Google Gemini</span></div>
+          <div class="meta-row"><span class="meta-key">免费额度</span><span class="meta-val">30次检索 / 月</span></div>
+          <div class="meta-row"><span class="meta-key">付费订阅</span><span class="meta-val">¥39–99 / 月</span></div>
+          <div class="meta-row"><span class="meta-key">状态</span><span class="meta-val" style="color:#2563eb;">开发中</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service 2: 内容推文 -->
+    <div class="service-block active" id="content">
+      <div class="service-head">
+        <div class="service-head-left">
+          <div class="svc-icon" style="background:#dcfce7;">📰</div>
+          <div>
+            <div class="svc-name">麻醉学文献解读</div>
+            <div class="svc-tagline">每周精选顶刊，用通俗语言解读前沿研究</div>
+          </div>
+        </div>
+        <span class="badge badge-green">✓ 正在运营</span>
+      </div>
+      <div class="service-body">
+        <div>
+          <p class="service-desc">
+            我们的内容团队每周精选 NEJM、Lancet、Anesthesiology、British Journal of Anaesthesia 等
+            顶级期刊的最新麻醉学研究，通过微信公众号图文和视频号进行深度解读。
+            帮助临床麻醉医生在碎片化时间内，高效把握学科前沿，无需跋涉英文原文。
+          </p>
+          <ul class="feature-list">
+            <li><span class="feat-check">✓</span> 每周 2–3 篇顶刊文献深度解读</li>
+            <li><span class="feat-check">✓</span> 微信图文 + 视频号短视频双格式</li>
+            <li><span class="feat-check">✓</span> 涵盖临床研究、指南解读、荟萃分析</li>
+            <li><span class="feat-check">✓</span> 提炼临床实践指导意义，不只是翻译</li>
+            <li><span class="feat-check">✓</span> 完全免费，关注即可获取</li>
+          </ul>
+        </div>
+        <div class="service-meta">
+          <div class="meta-row"><span class="meta-key">服务形态</span><span class="meta-val">微信公众号 + 视频号</span></div>
+          <div class="meta-row"><span class="meta-key">更新频率</span><span class="meta-val">每周 2–3 篇</span></div>
+          <div class="meta-row"><span class="meta-key">内容来源</span><span class="meta-val">国际顶级期刊</span></div>
+          <div class="meta-row"><span class="meta-key">收费</span><span class="meta-val">免费</span></div>
+          <div class="meta-row"><span class="meta-key">关注方式</span><span class="meta-val">搜索「麻醉学文献解读」</span></div>
+          <div class="meta-row"><span class="meta-key">状态</span><span class="meta-val" style="color:#16a34a;">运营中</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service 3: 医学生图 -->
+    <div class="service-block" id="image">
+      <div class="service-head">
+        <div class="service-head-left">
+          <div class="svc-icon" style="background:#cffafe;">🎨</div>
+          <div>
+            <div class="svc-name">AI 医学生图</div>
+            <div class="svc-tagline">专业医学插图与数据可视化，让学术内容更具表现力</div>
+          </div>
+        </div>
+        <span class="badge badge-gray">● 规划中</span>
+      </div>
+      <div class="service-body">
+        <div>
+          <p class="service-desc">
+            AI 驱动的专业医学插图生成服务，覆盖解剖示意图、操作步骤图解、统计图表可视化、
+            学术 PPT 配图及公众号封面图。让你的论文、演讲和内容创作呈现更加专业精美，
+            无需设计功底，描述需求即可生成。
+          </p>
+          <ul class="feature-list">
+            <li><span class="feat-check">✓</span> 麻醉相关解剖与操作示意图</li>
+            <li><span class="feat-check">✓</span> 统计结果可视化（KM 曲线、森林图、散点图等）</li>
+            <li><span class="feat-check">✓</span> 学术演讲 PPT 专业配图</li>
+            <li><span class="feat-check">✓</span> 微信公众号原创封面图</li>
+            <li><span class="feat-check">✓</span> 按量计费，灵活使用</li>
+          </ul>
+        </div>
+        <div class="service-meta">
+          <div class="meta-row"><span class="meta-key">服务形态</span><span class="meta-val">Web / 小程序</span></div>
+          <div class="meta-row"><span class="meta-key">AI 引擎</span><span class="meta-val">Imagen / Gemini</span></div>
+          <div class="meta-row"><span class="meta-key">计费方式</span><span class="meta-val">按张计费</span></div>
+          <div class="meta-row"><span class="meta-key">适用场景</span><span class="meta-val">论文 / 演讲 / 运营</span></div>
+          <div class="meta-row"><span class="meta-key">状态</span><span class="meta-val" style="color:#475569;">规划中</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Service 4: 课题撰写 -->
+    <div class="service-block" id="grant">
+      <div class="service-head">
+        <div class="service-head-left">
+          <div class="svc-icon" style="background:#ede9fe;">📝</div>
+          <div>
+            <div class="svc-name">AI 课题撰写（高端定制）</div>
+            <div class="svc-tagline">国自然 / 省市级基金全流程 AI 辅助撰写，一对一深度服务</div>
+          </div>
+        </div>
+        <span class="badge badge-gray">● 规划中</span>
+      </div>
+      <div class="service-body">
+        <div>
+          <p class="service-desc">
+            AI 辅助的科研课题申报书全流程撰写服务。从选题立项到全文定稿，采用多 AI 引擎协同工作，
+            结合麻醉学专业知识库，输出真正符合专家评审标准的高质量标书。
+            提供一对一深度定制，而非批量模板。
+          </p>
+          <ul class="feature-list">
+            <li><span class="feat-check">✓</span> 选题立项分析 + 研究空白识别</li>
+            <li><span class="feat-check">✓</span> 系统性文献综述与研究背景撰写</li>
+            <li><span class="feat-check">✓</span> 研究方案 + 技术路线 + 可行性论证</li>
+            <li><span class="feat-check">✓</span> 全文结构化标书生成与多轮修改</li>
+            <li><span class="feat-check">✓</span> 覆盖国自然、省市级基金、院内课题</li>
+          </ul>
+          <div class="flow-section">
+            <div class="flow-title">服务流程</div>
+            <div class="flow-steps">
+              <div class="flow-step"><span class="step-num">1</span>邮件或微信联系，提交课题方向和基本信息</div>
+              <div class="flow-step"><span class="step-num">2</span>需求沟通，确定选题方向和申报类别</div>
+              <div class="flow-step"><span class="step-num">3</span>AI 辅助文献检索、框架设计与初稿撰写</div>
+              <div class="flow-step"><span class="step-num">4</span>交付初稿，多轮修改直至满意</div>
+            </div>
+          </div>
+        </div>
+        <div class="service-meta">
+          <div class="meta-row"><span class="meta-key">服务模式</span><span class="meta-val">一对一高端定制</span></div>
+          <div class="meta-row"><span class="meta-key">适用类别</span><span class="meta-val">国自然 / 省市级</span></div>
+          <div class="meta-row"><span class="meta-key">参考定价</span><span class="meta-val">¥3,000–30,000</span></div>
+          <div class="meta-row"><span class="meta-key">交付周期</span><span class="meta-val">2–4 周</span></div>
+          <div class="meta-row"><span class="meta-key">联系方式</span><span class="meta-val">admin@fusuhealth.net</span></div>
+          <div class="meta-row"><span class="meta-key">状态</span><span class="meta-val" style="color:#475569;">规划中</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pricing summary -->
+    <div class="pricing-section">
+      <h2>简洁透明的定价</h2>
+      <p>从免费内容到高端定制，选择最适合你当前需求的方式入手。</p>
+      <div class="pricing-grid">
+        <div class="price-card">
+          <div class="price-tier">免费</div>
+          <div class="price-num">¥0</div>
+          <div class="price-desc">关注公众号「麻醉学文献解读」，每周获取顶刊文献解读，永久免费。</div>
+        </div>
+        <div class="price-card" style="border-color:rgba(37,99,235,.4);">
+          <div class="price-tier">订阅会员</div>
+          <div class="price-num">¥39–99<span style="font-size:.9rem;font-weight:400;color:rgba(255,255,255,.5);">/月</span></div>
+          <div class="price-desc">AI 文献检索小程序会员，无限次检索 + 高级 AI 解读功能（开发中）。</div>
+        </div>
+        <div class="price-card">
+          <div class="price-tier">高端定制</div>
+          <div class="price-num">¥3K–3万</div>
+          <div class="price-desc">AI 课题撰写一对一定制服务，按项目报价，覆盖各类基金申报（规划中）。</div>
+        </div>
+      </div>
+      <a href="/contact" style="display:inline-block;margin-top:32px;background:#2563eb;color:#fff;padding:11px 28px;border-radius:8px;font-weight:600;font-size:.9rem;">
+        咨询具体需求 →
+      </a>
+    </div>
+
+  </div>
+</section>
+
 </Layout>

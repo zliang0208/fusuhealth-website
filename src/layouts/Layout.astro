@@ -4,7 +4,8 @@ interface Props {
   description?: string;
 }
 
-const { title, description = '杭州扶苏健康科技有限公司 — AI驱动的麻醉学知识服务平台' } = Astro.props;
+const { title, description = '杭州扶苏健康科技 — 面向麻醉科医生的 AI 知识服务平台，提供文献检索、医学生图、课题撰写全方位支持' } = Astro.props;
+const currentPath = Astro.url.pathname;
 ---
 
 <!DOCTYPE html>
@@ -13,59 +14,245 @@ const { title, description = '杭州扶苏健康科技有限公司 — AI驱动�
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content={description} />
+  <meta name="keywords" content="麻醉学,AI文献检索,医学科研,PubMed,课题撰写,麻醉科医生" />
   <title>{title} | 扶苏健康科技</title>
   <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
   <style is:global>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
     :root {
-      --primary: #1a73e8;
-      --primary-dark: #1557b0;
-      --bg: #ffffff;
-      --bg-light: #f8f9fa;
-      --text: #202124;
-      --text-secondary: #5f6368;
-      --border: #e8eaed;
-      --max-width: 1100px;
+      --navy:       #0f1e35;
+      --navy-light: #1a2f4a;
+      --primary:    #2563eb;
+      --primary-h:  #1d4ed8;
+      --cyan:       #06b6d4;
+      --bg:         #ffffff;
+      --bg-soft:    #f8fafc;
+      --bg-blue:    #eff6ff;
+      --text:       #1e293b;
+      --muted:      #64748b;
+      --border:     #e2e8f0;
+      --radius:     10px;
+      --max:        1120px;
+      --shadow:     0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.06);
     }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
       color: var(--text);
-      line-height: 1.7;
+      line-height: 1.75;
       background: var(--bg);
+      -webkit-font-smoothing: antialiased;
     }
 
-    a { color: var(--primary); text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    a { color: var(--primary); text-decoration: none; transition: color .2s; }
+    a:hover { color: var(--primary-h); }
 
-    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+    .container { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+    /* ── Nav ── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--navy);
+      box-shadow: 0 1px 0 rgba(255,255,255,.07);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      gap: 16px;
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff !important;
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: -.3px;
+      flex-shrink: 0;
+    }
+    .nav-logo .logo-icon {
+      width: 32px;
+      height: 32px;
+      background: linear-gradient(135deg, var(--primary), var(--cyan));
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .9rem;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      list-style: none;
+    }
+    .nav-links a {
+      color: rgba(255,255,255,.75);
+      font-size: .9rem;
+      padding: 6px 14px;
+      border-radius: 6px;
+      transition: all .2s;
+    }
+    .nav-links a:hover,
+    .nav-links a.active { color: #fff; background: rgba(255,255,255,.1); }
+    .nav-cta {
+      background: var(--primary);
+      color: #fff !important;
+      padding: 7px 18px !important;
+      border-radius: 6px !important;
+      font-weight: 600;
+    }
+    .nav-cta:hover { background: var(--primary-h) !important; }
+
+    /* ── Footer ── */
+    .site-footer {
+      background: var(--navy);
+      color: rgba(255,255,255,.6);
+      font-size: .875rem;
+      padding: 48px 0 32px;
+      margin-top: 80px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+    .footer-brand p { margin-top: 10px; line-height: 1.8; font-size: .85rem; max-width: 280px; }
+    .footer-col h4 { color: #fff; font-size: .9rem; margin-bottom: 14px; font-weight: 600; }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 8px; }
+    .footer-col a { color: rgba(255,255,255,.6); font-size: .875rem; }
+    .footer-col a:hover { color: #fff; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,.08);
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    /* ── Utility ── */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-size: .75rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .badge-green  { background: #dcfce7; color: #166534; }
+    .badge-blue   { background: #dbeafe; color: #1d4ed8; }
+    .badge-gray   { background: #f1f5f9; color: #475569; }
+    .badge-orange { background: #fff7ed; color: #9a3412; }
+
+    .section-label {
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.3;
+      margin-bottom: 14px;
+    }
+    .section-sub {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 560px;
+    }
+    .card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      transition: box-shadow .2s, transform .2s;
+    }
+    .card:hover { box-shadow: 0 4px 24px rgba(0,0,0,.1); transform: translateY(-2px); }
+
+    @media (max-width: 768px) {
+      .footer-grid { grid-template-columns: 1fr; gap: 28px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .section-title { font-size: 1.5rem; }
+    }
+    @media (max-width: 600px) {
+      .nav-links .hide-mobile { display: none; }
+    }
   </style>
 </head>
 <body>
-  <header style="border-bottom: 1px solid var(--border); padding: 16px 0;">
-    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
-      <a href="/" style="font-size: 1.25rem; font-weight: 700; color: var(--text);">
-        🏥 扶苏健康科技
+
+<header class="site-header">
+  <div class="container">
+    <div class="nav-inner">
+      <a href="/" class="nav-logo">
+        <span class="logo-icon">扶</span>
+        扶苏健康科技
       </a>
-      <nav style="display: flex; gap: 24px; font-size: 0.95rem;">
-        <a href="/">首页</a>
-        <a href="/about">关于我们</a>
-        <a href="/services">服务</a>
-        <a href="/contact">联系我们</a>
+      <nav>
+        <ul class="nav-links">
+          <li class="hide-mobile"><a href="/" class={currentPath === '/' ? 'active' : ''}>首页</a></li>
+          <li class="hide-mobile"><a href="/services" class={currentPath.startsWith('/services') ? 'active' : ''}>服务</a></li>
+          <li class="hide-mobile"><a href="/about" class={currentPath.startsWith('/about') ? 'active' : ''}>关于我们</a></li>
+          <li><a href="/contact" class={`nav-cta ${currentPath.startsWith('/contact') ? 'active' : ''}`}>联系我们</a></li>
+        </ul>
       </nav>
     </div>
-  </header>
+  </div>
+</header>
 
-  <main>
-    <slot />
-  </main>
+<main>
+  <slot />
+</main>
 
-  <footer style="background: var(--bg-light); border-top: 1px solid var(--border); padding: 40px 0; margin-top: 60px;">
-    <div class="container" style="text-align: center; color: var(--text-secondary); font-size: 0.875rem;">
-      <p>© 2025 杭州扶苏健康科技有限公司</p>
-      <p style="margin-top: 8px;">联系邮箱：admin@fusuhealth.net</p>
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="width:28px;height:28px;background:linear-gradient(135deg,#2563eb,#06b6d4);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.8rem;color:#fff;font-weight:700;">扶</span>
+          <span style="color:#fff;font-weight:700;">扶苏健康科技</span>
+        </div>
+        <p>专注麻醉学领域的 AI 知识服务，赋能临床医生更高效地学习、研究与写作。</p>
+      </div>
+      <div class="footer-col">
+        <h4>产品服务</h4>
+        <ul>
+          <li><a href="/services#literature">AI 文献检索</a></li>
+          <li><a href="/services#image">AI 医学生图</a></li>
+          <li><a href="/services#grant">AI 课题撰写</a></li>
+          <li><a href="/services#content">文献推文解读</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>关于</h4>
+        <ul>
+          <li><a href="/about">公司简介</a></li>
+          <li><a href="/contact">联系我们</a></li>
+          <li><a href="mailto:admin@fusuhealth.net">admin@fusuhealth.net</a></li>
+        </ul>
+      </div>
     </div>
-  </footer>
+    <div class="footer-bottom">
+      <span>© 2026 杭州扶苏健康科技有限公司</span>
+      <span>fusuhealth.cn · admin@fusuhealth.net</span>
+    </div>
+  </div>
+</footer>
+
 </body>
 </html>
