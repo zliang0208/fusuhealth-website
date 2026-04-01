@@ -32,10 +32,57 @@ jobs:
           target: "/var/www/fusuhealth"
           strip_components: 1
 
-      - name: Reload Nginx
+      - name: Configure SSL and Nginx
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.SERVER_HOST }}
           username: root
           key: ${{ secrets.SERVER_SSH_KEY }}
-          script: nginx -s reload
+          envs: SSL_CERT,SSL_KEY
+          script: |
+            # 写入证书文件
+            mkdir -p /etc/nginx/ssl
+            echo "$SSL_CERT" | base64 -d > /etc/nginx/ssl/fusuhealth.cn_bundle.pem
+            echo "$SSL_KEY"  | base64 -d > /etc/nginx/ssl/fusuhealth.cn.key
+            chmod 600 /etc/nginx/ssl/fusuhealth.cn.key
+
+            # 写入 Nginx 配置
+            cat > /etc/nginx/sites-available/fusuhealth-web << 'NGINX'
+            server {
+                listen 443 ssl;
+                server_name fusuhealth.cn www.fusuhealth.cn;
+
+                ssl_certificate     /etc/nginx/ssl/fusuhealth.cn_bundle.pem;
+                ssl_certificate_key /etc/nginx/ssl/fusuhealth.cn.key;
+                ssl_protocols       TLSv1.2 TLSv1.3;
+                ssl_ciphers         HIGH:!aNULL:!MD5;
+
+                root /var/www/fusuhealth;
+                index index.html;
+
+                location / {
+                    try_files $uri $uri/ $uri.html /index.html;
+                }
+
+                location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$ {
+                    expires 30d;
+                    add_header Cache-Control "public, immutable";
+                }
+
+                add_header X-Content-Type-Options nosniff;
+                add_header X-Frame-Options DENY;
+                add_header Strict-Transport-Security "max-age=31536000" always;
+                location ~ /\. { deny all; }
+            }
+
+            server {
+                listen 80;
+                server_name fusuhealth.cn www.fusuhealth.cn;
+                return 301 https://$host$request_uri;
+            }
+            NGINX
+
+            nginx -t && nginx -s reload
+        env:
+          SSL_CERT: ${{ secrets.SSL_CERT }}
+          SSL_KEY: ${{ secrets.SSL_KEY }}
